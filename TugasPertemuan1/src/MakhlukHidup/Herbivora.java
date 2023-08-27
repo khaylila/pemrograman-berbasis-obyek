@@ -1,13 +1,12 @@
 package MakhlukHidup;
 
 public class Herbivora extends Hewan {
-    private String makanan;
 
-    public String getMakanan() {
-        return makanan;
+    public Herbivora() {
+        this.jenisMakanan = "Herbivora";
     }
 
-    public void setMakanan(String makanan) {
-        this.makanan = makanan;
+    public String getJenisMakanan() {
+        return jenisMakanan;
     }
 }

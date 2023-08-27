@@ -1,13 +1,15 @@
 package MakhlukHidup;
 
-public class Hewan extends MakhlukHidup {
-    private String caraBerkembangBiak;
+import java.util.ArrayList;
 
-    public String getCaraBerkembangBiak() {
-        return caraBerkembangBiak;
+public class Hewan extends MakhlukHidup {
+    public int jumlahKaki = 0;
+
+    public ArrayList<String> getCiriCiri() {
+        return ciriCiri;
     }
 
-    public void setCaraBerkembangBiak(String caraBerkembangBiak) {
-        this.caraBerkembangBiak = caraBerkembangBiak;
+    public void addCiriCiri(String ciriCiri) {
+        this.ciriCiri.add(ciriCiri);
     }
 }
