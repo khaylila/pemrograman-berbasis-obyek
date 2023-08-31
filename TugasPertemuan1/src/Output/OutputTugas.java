@@ -5,7 +5,7 @@ import MakhlukHidup.Herbivora;
 
 public class OutputTugas {
     public static void main(String[] args) {
-        Herbivora gajah = new Herbivora();
+        Herbivora gajah = new Herbivora("empal");
         gajah.setNama("Gajah Sumatra");
         gajah.setAsal("Pulau Sumatra, Indonesia");
         gajah.setBahasaLatin("Elephas maximus sumatranus");
@@ -21,6 +21,7 @@ public class OutputTugas {
                 + " adalah subspesies dari " + gajah.getSubSpecies()
                 + " yang berasal dari " + gajah.getAsal()
                 + " dan berjenis " + gajah.getJenisMakanan() + ".");
+        System.out.println("Makanan " + gajah.getJenisMakanan());
         System.out.println(gajah.getNama()
                 + " memiliki " + gajah.jumlahKaki + " kaki.");
         System.out.println(gajah.getNama()
