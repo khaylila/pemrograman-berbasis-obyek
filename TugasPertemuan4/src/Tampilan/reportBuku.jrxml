@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="0bfb3c27-ab42-4c3e-ab21-ff1f0b0f789b">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM books;]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="pengarang" class="java.lang.String"/>
+	<field name="jenis" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="171" y="0" width="218" height="79" uuid="7210e2c3-0513-476a-9fb7-76213292ee30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="32"/>
+				</textElement>
+				<text><![CDATA[Coba Coba]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="78" height="60" uuid="e07d2042-18df-4ed8-bb21-0e22f3afcf09"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="78" y="0" width="178" height="60" uuid="252092cc-01d6-4942-8ef8-b484e1fdb939"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[NAME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="0" width="141" height="60" uuid="7ee0b16f-ebac-4a46-9138-72d011c483f4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[JENIS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="256" y="0" width="158" height="60" uuid="7ab080ce-d1de-46fc-af41-d3ee23842217"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[PENGARANG]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="78" height="20" uuid="5d4c91ab-5aac-42c6-9b5b-dee8a626688b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="78" y="0" width="178" height="20" uuid="61d60dfb-2b84-4f83-8130-987ef09e0f93"/>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="256" y="0" width="158" height="20" uuid="2c5ca2b4-cab4-4702-91e6-cf61ca026d2e"/>
+				<textFieldExpression><![CDATA[$F{pengarang}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="414" y="0" width="141" height="20" uuid="c16082b3-a56c-43b2-b553-c6372be38973"/>
+				<textFieldExpression><![CDATA[$F{jenis}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

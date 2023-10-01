@@ -1,0 +1,6 @@
+{
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar",
+    "/home/milea/Documents/kuliah/pemrogramanBerbasisObyek/postgresql-42.6.0.jar"
+  ]
+}
