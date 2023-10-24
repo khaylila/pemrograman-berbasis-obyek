@@ -46,7 +46,6 @@ public class Database {
         String query = "SELECT " + select + " FROM " + this.table
                 + " ORDER BY " + orderBy[0] + " " + orderBy[1]
                 + " LIMIT " + limit;
-        System.out.println(query);
         return this.get(query);
     }
 

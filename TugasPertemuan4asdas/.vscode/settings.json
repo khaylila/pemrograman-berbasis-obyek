@@ -1,0 +1,22 @@
+{
+  "java.project.referencedLibraries": [
+    "lib/**/*.jar",
+    "/home/milea/Documents/kuliah/pemrogramanBerbasisObyek/postgresql-42.6.0.jar",
+    "/home/milea/Downloads/jasperreports-6.20.6.jar",
+    "/home/milea/Downloads/commons-collections4-4.4-bin/commons-collections4-4.4/commons-collections4-4.4-test-sources.jar",
+    "/home/milea/Downloads/commons-collections4-4.4-bin/commons-collections4-4.4/commons-collections4-4.4-sources.jar",
+    "/home/milea/Downloads/commons-collections4-4.4-bin/commons-collections4-4.4/commons-collections4-4.4-tests.jar",
+    "/home/milea/Downloads/commons-collections4-4.4-bin/commons-collections4-4.4/commons-collections4-4.4-javadoc.jar",
+    "/home/milea/Downloads/commons-collections4-4.4-bin/commons-collections4-4.4/commons-collections4-4.4.jar",
+    "/home/milea/Downloads/commons-digester-2.1-bin/commons-digester-2.1/commons-digester-2.1-javadoc.jar",
+    "/home/milea/Downloads/commons-digester-2.1-bin/commons-digester-2.1/commons-digester-2.1.jar",
+    "/home/milea/Downloads/commons-digester-2.1-bin/commons-digester-2.1/commons-digester-2.1-sources.jar",
+    "/home/milea/Downloads/commons-logging-1.2-bin/commons-logging-1.2/commons-logging-1.2-javadoc.jar",
+    "/home/milea/Downloads/commons-logging-1.2-bin/commons-logging-1.2/commons-logging-1.2.jar",
+    "/home/milea/Downloads/commons-beanutils-1.9.4-bin/commons-beanutils-1.9.4/commons-beanutils-1.9.4-tests.jar",
+    "/home/milea/Downloads/commons-beanutils-1.9.4-bin/commons-beanutils-1.9.4/commons-beanutils-1.9.4-test-sources.jar",
+    "/home/milea/Downloads/commons-beanutils-1.9.4-bin/commons-beanutils-1.9.4/commons-beanutils-1.9.4-javadoc.jar",
+    "/home/milea/Downloads/commons-beanutils-1.9.4-bin/commons-beanutils-1.9.4/commons-beanutils-1.9.4-sources.jar",
+    "/home/milea/Downloads/commons-beanutils-1.9.4-bin/commons-beanutils-1.9.4/commons-beanutils-1.9.4.jar"
+  ]
+}
