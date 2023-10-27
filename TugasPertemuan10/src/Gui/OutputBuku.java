@@ -6,18 +6,17 @@ package Gui;
 
 import Database.DaftarBuku;
 import java.awt.Cursor;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -28,12 +27,15 @@ import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.view.JasperViewer;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 
 /**
  *
  * @author milea
  */
 public class OutputBuku extends javax.swing.JFrame {
+
     private int id = 0;
 
     /**
@@ -64,7 +66,7 @@ public class OutputBuku extends javax.swing.JFrame {
         entityManager.getTransaction().begin();
         TypedQuery<DaftarBuku> querySelectAll = entityManager.createNamedQuery("DaftarBuku.findAll", DaftarBuku.class);
         List<DaftarBuku> results = querySelectAll.getResultList();
-        
+
         DefaultTableModel model = (DefaultTableModel) tabelDaftarBuku.getModel();
         model.setRowCount(0);
         for (DaftarBuku data : results) {
@@ -104,6 +106,7 @@ public class OutputBuku extends javax.swing.JFrame {
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         btnPrint = new javax.swing.JButton();
+        btnUpload = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -204,6 +207,13 @@ public class OutputBuku extends javax.swing.JFrame {
             }
         });
 
+        btnUpload.setText("Upload");
+        btnUpload.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnUploadActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -234,8 +244,10 @@ public class OutputBuku extends javax.swing.JFrame {
                             .addComponent(inputTahunTerbit, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnUpload)
+                        .addGap(18, 18, 18)
                         .addComponent(btnInsert)
-                        .addGap(27, 27, 27)
+                        .addGap(18, 18, 18)
                         .addComponent(btnUpdate)
                         .addGap(18, 18, 18)
                         .addComponent(btnDelete)
@@ -271,7 +283,8 @@ public class OutputBuku extends javax.swing.JFrame {
                     .addComponent(btnInsert)
                     .addComponent(btnUpdate)
                     .addComponent(btnDelete)
-                    .addComponent(btnPrint))
+                    .addComponent(btnPrint)
+                    .addComponent(btnUpload))
                 .addGap(16, 16, 16)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(26, Short.MAX_VALUE))
@@ -426,6 +439,42 @@ public class OutputBuku extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_inputTahunTerbitActionPerformed
 
+    private void btnUploadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUploadActionPerformed
+        // TODO add your handling code here:
+        JFileChooser filechooser = new JFileChooser();
+        int i = filechooser.showOpenDialog(null);
+        if (i == JFileChooser.APPROVE_OPTION) {
+            File f = filechooser.getSelectedFile();
+            String filepath = f.getPath();
+            //Parsing CSV Data
+            try {
+                InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(filepath));
+                org.apache.commons.csv.CSVParser csvParser = CSVFormat.DEFAULT.parse(inputStreamReader);
+                EntityManager entityManager = Persistence.createEntityManagerFactory("TugasPertemuan9PU").createEntityManager();
+                entityManager.getTransaction().begin();
+                for (CSVRecord csvRecord : csvParser) {
+                    try {
+                        DaftarBuku daftarBuku = new DaftarBuku();
+                        daftarBuku.setIsbn(csvRecord.get(0).trim());
+                        daftarBuku.setJudulBuku(csvRecord.get(1).trim());
+                        daftarBuku.setTahunTerbit(csvRecord.get(2).trim());
+                        daftarBuku.setPenerbit(csvRecord.get(3).trim());
+                        entityManager.persist(daftarBuku);
+                    } catch (Exception e) {
+                        this.peringatan("Tambah data gagal. Pesan: " + e.getMessage());
+                    }
+                }
+
+                entityManager.getTransaction().commit();
+                this.peringatan("Berhasil menambahkan data!");
+                this.tampil();
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+                this.peringatan("Error in Parsing CSV File");
+            }
+        }
+    }//GEN-LAST:event_btnUploadActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -466,6 +515,7 @@ public class OutputBuku extends javax.swing.JFrame {
     private javax.swing.JButton btnInsert;
     private javax.swing.JButton btnPrint;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.JButton btnUpload;
     private javax.swing.JTextField inputISBN;
     private javax.swing.JTextField inputJudulBuku;
     private javax.swing.JTextField inputPenerbit;
