@@ -6,8 +6,8 @@ Untuk detail tugasnya adalah sebagai berikut :
 fungsi upload dokumen berbasis CSV
 
 #### Cara Menjalankan
-Untuk menjalankan aplikasi pada pertemuan 6 adalah sebagai berikut :
+Untuk menjalankan aplikasi pada pertemuan 10 adalah sebagai berikut :
 1. Buka aplikasi Netbeans
 2. Pada halaman awal lakukan import project
-3. Pilih folder TugasPertemuan6 lalu pilih open
+3. Pilih folder TugasPertemuan10 lalu pilih open
 4. Cari kelas OutputBuku pada package Gui, lalu coba jalankan
