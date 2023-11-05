@@ -1,12 +1,12 @@
-## Tugas Pertemuan 9 - Implementasi Aplikasi CRUD (Create Read Update dan Delete) GUI + Report (Jasper Report) (BUKU)
+## Tugas Pertemuan 9 - Java Persistance
 #### Deskripsi Singkat
-Pada folder ini berisi hasil dari tugas pertemuan keenam, materi yang diberikan adalah membuat report berdasarkan aplikasi CRUD yang telah dibuat selanjutnya. Untuk plugin yang digunakan adalah JasperReport. Dimana implementasi yang penulis lakukan adalah membuat database perpustakaan dan tabel bernama books, lalu kemudian dipanggil menggunakan kelas Output yang terdapat pada package Tampilan.
+Pada folder ini berisi hasil dari tugas pertemuan keembilan, materi yang diberikan adalah Java Persistance
 Untuk detail tugasnya adalah sebagai berikut :
 1. Membuat CRUD berbasis Persistance berdasarkan soal UTS
 
 #### Cara Menjalankan
-Untuk menjalankan aplikasi pada pertemuan 6 adalah sebagai berikut :
+Untuk menjalankan aplikasi pada pertemuan 9 adalah sebagai berikut :
 1. Buka aplikasi Netbeans
 2. Pada halaman awal lakukan import project
-3. Pilih folder TugasPertemuan6 lalu pilih open
-4. Cari kelas Output pada package Tampilan, lalu coba jalankan
+3. Pilih folder TugasPertemuan9 lalu pilih open
+4. Cari kelas OutputBuku pada package Gui, lalu coba jalankan
