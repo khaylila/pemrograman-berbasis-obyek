@@ -8,6 +8,7 @@ import Database.Students;
 import Output.Auth.FormLogin;
 import Output.MainFrame;
 import Output.Submenu.Buku.FormBuku;
+import Output.Submenu.Buku.FormEditBuku;
 import Output.Submenu.Peminjaman.FormPeminjaman;
 import java.util.List;
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class CariPenyumbangBuku extends MainFrame {
         this.obj = obj;
         this.loadData();
     }
-    
+
     public CariPenyumbangBuku(int userId) {
         initComponents();
         this.userId = userId;
@@ -50,7 +51,7 @@ public class CariPenyumbangBuku extends MainFrame {
 
     protected void loadData() {
         String search = inputSearch.getText().trim();
-        if(search.equalsIgnoreCase("search")){
+        if (search.equalsIgnoreCase("search")) {
             search = "";
         }
         int filter = searchBy.getSelectedIndex();
@@ -258,9 +259,11 @@ public class CariPenyumbangBuku extends MainFrame {
         System.out.println(studentId);
         if (obj instanceof FormBuku) {
             ((FormBuku) obj).setMahasiswaId(studentId);
-        }else if(obj instanceof FormPeminjaman){
+        } else if (obj instanceof FormPeminjaman) {
             ((FormPeminjaman) obj).setMahasiswaId(studentId);
-        }else {
+        } else if (obj instanceof FormEditBuku) {
+            ((FormEditBuku) obj).setMahasiswaId(studentId);
+        } else {
             System.out.println("bukan instance FormBuku dan FormPeminjaman");
         }
         this.dispose();

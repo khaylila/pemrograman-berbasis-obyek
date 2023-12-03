@@ -27,7 +27,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "borrows")
 @NamedQueries({
-    @NamedQuery(name = "Borrows.findAll", query = "SELECT b FROM Borrows b"),
+    @NamedQuery(name = "Borrows.findAll", query = "SELECT b FROM Borrows b WHERE EXTRACT(MONTH FROM b.createdAt) = :month AND EXTRACT(YEAR FROM b.createdAt) = :year"),
     @NamedQuery(name = "Borrows.findByPinjamId", query = "SELECT b FROM Borrows b WHERE b.pinjamId = :pinjamId"),
     @NamedQuery(name = "Borrows.findByTanggalPinjam", query = "SELECT b FROM Borrows b WHERE b.tanggalPinjam = :tanggalPinjam"),
     @NamedQuery(name = "Borrows.findByRencanaKembali", query = "SELECT b FROM Borrows b WHERE b.rencanaKembali = :rencanaKembali"),
@@ -38,7 +38,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Borrows.findByUpdatedAt", query = "SELECT b FROM Borrows b WHERE b.updatedAt = :updatedAt"),
     @NamedQuery(name = "Borrows.findByMonthYear", query = "SELECT b FROM Borrows b WHERE EXTRACT(MONTH FROM b.createdAt) = :month AND EXTRACT(YEAR FROM b.createdAt) = :year"),
     @NamedQuery(name = "Borrows.findByMahasiswaMonthYear", query = "SELECT b FROM Borrows b WHERE LOWER(b.studentId.fullname) LIKE LOWER(:parameter) AND EXTRACT(MONTH FROM b.createdAt) = :month AND EXTRACT(YEAR FROM b.createdAt) = :year"),
-    @NamedQuery(name = "Borrows.findByBooksMonthYear", query = "SELECT b FROM Borrows b WHERE LOWER(b.booksId.judul) LIKE LOWER(:parameter) AND EXTRACT(MONTH FROM b.createdAt) = :month AND EXTRACT(YEAR FROM b.createdAt) = :year")})
+    @NamedQuery(name = "Borrows.findByBooksMonthYear", query = "SELECT b FROM Borrows b WHERE LOWER(b.booksId.judul) LIKE LOWER(:parameter) AND EXTRACT(MONTH FROM b.createdAt) = :month AND EXTRACT(YEAR FROM b.createdAt) = :year"),
+    @NamedQuery(name = "Borrows.findByBookId", query = "SELECT b FROM Borrows b WHERE b.booksId.bookId = :bookId")})
 public class Borrows implements Serializable {
 
     private static final long serialVersionUID = 1L;

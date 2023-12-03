@@ -22,6 +22,17 @@ public class Dashboard extends javax.swing.JFrame {
         initComponents();
     }
 
+    public Dashboard(int userId, String panel) {
+        this.userId = userId;
+        initComponents();
+        if (panel.equalsIgnoreCase("Books")) {
+            panelMain.removeAll();
+            panelMain.add(new BookNew(this, userId));
+            panelMain.repaint();
+            panelMain.revalidate();
+        }
+    }
+
     /**
      * Creates new form Dashboard
      */
@@ -119,7 +130,7 @@ public class Dashboard extends javax.swing.JFrame {
         // TODO add your handling code here:
         System.out.println(userId);
         panelMain.removeAll();
-        panelMain.add(new BookNew(userId));
+        panelMain.add(new BookNew(this, userId));
         panelMain.repaint();
         panelMain.revalidate();
     }//GEN-LAST:event_menuBukuMouseClicked

@@ -21,6 +21,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -30,27 +31,96 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *
  * @author milea
  */
-public class FormBuku extends MainFrame {
+public class FormEditBuku extends MainFrame {
 
     int userId;
     Students student;
-    ArrayList<Categories> listSelectedCategory = new ArrayList<>();
+    List<Categories> listSelectedCategory = new ArrayList<>();
+    Books buku;
     protected File file;
     protected String path;
     protected ImageIcon imgIcon;
-    protected Object obj;
 
     /**
      * Creates new form FormBuku
      */
-    public FormBuku() {
-        initComponents();
+    public FormEditBuku() {
+        TypedQuery<Books> getBukuById = entityManager.createNamedQuery("Books.findByBookId", Books.class);
+        getBukuById.setParameter("bookId", 1);
+        this.buku = getBukuById.getSingleResult();
+        try {
+            initComponents();
+
+            inputJudul.setText(this.buku.getJudul());
+            inputIsbn.setText(this.buku.getIsbn());
+            inputJumlahHalaman.setText(String.valueOf(this.buku.getJumlahHalaman() == null ? "" : this.buku.getJumlahHalaman()));
+            inputSubJudul.setText(this.buku.getSubJudul());
+            inputPengarang.setText(this.buku.getPengarang());
+            inputPenerbit.setText(this.buku.getPenerbit());
+            inputTahunTerbit.setText(this.buku.getTahunTerbit());
+            inputBanyaknya.setText(String.valueOf(this.buku.getBanyaknya()));
+            labelPreview.setIcon(this.getImageFromDatabase(this.buku.getFotoSampul(), 150));
+            inputStudentId.setText(this.buku.getStudentId() != null ? this.buku.getStudentId().getFullname() : "");
+
+            String kategoriText = "";
+            int i = 1;
+            for (Categories kategori : this.buku.getCategoriesList()) {
+                kategoriText += kategori.getNama();
+                if (i != this.buku.getCategoriesList().size()) {
+                    kategoriText += ", ";
+                }
+                i++;
+                this.listSelectedCategory.add(kategori);
+            }
+            inputKategori.setText(kategoriText);
+
+            this.student = this.buku.getStudentId();
+            this.listSelectedCategory = this.buku.getCategoriesList();
+        } catch (NoResultException e) {
+            System.out.println(e.getMessage());
+            this.dispose();
+            this.peringatan("Buku tidak ditemukan!");
+        }
     }
 
-    public FormBuku(Object obj, int userId) {
+    public FormEditBuku(int userId, int bookId) {
         this.userId = userId;
-        this.obj = obj;
-        initComponents();
+        TypedQuery<Books> getBukuById = entityManager.createNamedQuery("Books.findByBookId", Books.class);
+        getBukuById.setParameter("bookId", bookId);
+        this.buku = getBukuById.getSingleResult();
+        try {
+            initComponents();
+
+            inputJudul.setText(this.buku.getJudul());
+            inputIsbn.setText(this.buku.getIsbn());
+            inputJumlahHalaman.setText(String.valueOf(this.buku.getJumlahHalaman() == null ? "" : this.buku.getJumlahHalaman()));
+            inputSubJudul.setText(this.buku.getSubJudul());
+            inputPengarang.setText(this.buku.getPengarang());
+            inputPenerbit.setText(this.buku.getPenerbit());
+            inputTahunTerbit.setText(this.buku.getTahunTerbit());
+            inputBanyaknya.setText(String.valueOf(this.buku.getBanyaknya()));
+            labelPreview.setIcon(this.getImageFromDatabase(this.buku.getFotoSampul(), 150));
+            inputStudentId.setText(this.buku.getStudentId() != null ? this.buku.getStudentId().getFullname() : "");
+
+            String kategoriText = "";
+            int i = 1;
+            for (Categories kategori : this.buku.getCategoriesList()) {
+                kategoriText += kategori.getNama();
+                if (i != this.buku.getCategoriesList().size()) {
+                    kategoriText += ", ";
+                }
+                i++;
+                this.listSelectedCategory.add(kategori);
+            }
+            inputKategori.setText(kategoriText);
+
+            this.student = this.buku.getStudentId();
+            this.listSelectedCategory = this.buku.getCategoriesList();
+        } catch (NoResultException e) {
+            System.out.println(e.getMessage());
+            this.dispose();
+            this.peringatan("Buku tidak ditemukan!");
+        }
     }
 
     public void setMahasiswaId(int studentId) {
@@ -121,6 +191,11 @@ public class FormBuku extends MainFrame {
         setTitle("Tambah Buku");
         setBackground(new java.awt.Color(255, 255, 255));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -151,7 +226,7 @@ public class FormBuku extends MainFrame {
 
         jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/logo-30x30.png"))); // NOI18N
-        jLabel1.setText("Tambah Buku");
+        jLabel1.setText("Ubah Buku");
 
         jLabel2.setText("ISBN");
 
@@ -361,42 +436,36 @@ public class FormBuku extends MainFrame {
                 this.peringatan("Data tidak boleh kosong!");
             } else {
                 try {
-                    Books newBook = new Books();
-                    newBook.setIsbn(isbn);
-                    newBook.setJudul(judul);
-                    newBook.setSubJudul(subJudul);
-                    newBook.setPenerbit(penerbit);
-                    newBook.setPengarang(pengarang);
-                    newBook.setTahunTerbit(tahunTerbit);
-                    newBook.setJumlahHalaman(Integer.valueOf(jumlahHalaman));
-                    newBook.setBanyaknya(banyaknya);
+                    Books selectedBook = this.buku;
+                    selectedBook.setIsbn(isbn);
+                    selectedBook.setJudul(judul);
+                    selectedBook.setSubJudul(subJudul);
+                    selectedBook.setPenerbit(penerbit);
+                    selectedBook.setPengarang(pengarang);
+                    selectedBook.setTahunTerbit(tahunTerbit);
+                    selectedBook.setJumlahHalaman(Integer.valueOf(jumlahHalaman));
+                    selectedBook.setBanyaknya(banyaknya);
                     if (file != null) {
                         InputStream is = new FileInputStream(file);
-                        newBook.setFotoSampul(is.readAllBytes());
+                        selectedBook.setFotoSampul(is.readAllBytes());
                     }
 
                     TypedQuery<Users> queryGetUsername = entityManager.createNamedQuery("Users.findByUserId", Users.class);
                     queryGetUsername.setParameter("userId", userId);
                     Users result = queryGetUsername.getSingleResult();
-                    newBook.setUserId(result);
+                    selectedBook.setUserId(result);
                     Date date = new Date();
-                    newBook.setCreatedAt(date);
-                    newBook.setUpdatedAt(date);
+                    selectedBook.setUpdatedAt(date);
 
-                    newBook.setCategoriesList(listSelectedCategory);
-                    
-                    newBook.setStudentId(student);
-                    
+                    selectedBook.setCategoriesList(listSelectedCategory);
+
+                    selectedBook.setStudentId(student);
+
                     entityManager.getTransaction().begin();
-                    entityManager.persist(newBook);
+                    entityManager.merge(selectedBook);
                     entityManager.getTransaction().commit();
                     this.peringatan("Berhasil menyimpan Buku");
                     this.dispose();
-                    if (obj instanceof BookNew) {
-                        ((View.BookNew) obj).loadTabel();
-                    } else {
-                        System.out.println("ini bukan intance BookNew");
-                    }
                 } catch (FileNotFoundException e) {
                     this.peringatan("File tidak ditemukan!");
                     entityManager.getTransaction().rollback();
@@ -413,7 +482,7 @@ public class FormBuku extends MainFrame {
         // TODO add your handling code here:
         file = null;
         try {
-            InputStream inputStream = FormBuku.class.getResourceAsStream("/assets/img/upload-150x150.png");
+            InputStream inputStream = FormEditBuku.class.getResourceAsStream("/assets/img/upload-150x150.png");
             if (inputStream == null) {
                 this.peringatan("File tidak ditemukan.");
             }
@@ -438,6 +507,11 @@ public class FormBuku extends MainFrame {
         new Kategori(this, userId).setVisible(true);
     }//GEN-LAST:event_inputKategoriMouseClicked
 
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        new ViewBuku(userId, this.buku.getBookId()).setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
+
     /**
      * @param args the command line arguments
      */
@@ -455,20 +529,21 @@ public class FormBuku extends MainFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormBuku.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormEditBuku.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormBuku.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormEditBuku.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormBuku.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormEditBuku.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormBuku.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormEditBuku.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormBuku().setVisible(true);
+                new FormEditBuku().setVisible(true);
             }
         });
     }

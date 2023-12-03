@@ -49,7 +49,13 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Books.findByLikePengarang", query = "SELECT b FROM Books b WHERE UPPER(b.pengarang) LIKE UPPER(:parameter)"),
     @NamedQuery(name = "Books.findByLikePenerbit", query = "SELECT b FROM Books b WHERE UPPER(b.penerbit) LIKE UPPER(:parameter)"),
     @NamedQuery(name = "Books.findByLikeTahunTerbit", query = "SELECT b FROM Books b WHERE b.tahunTerbit LIKE :parameter"),
-    @NamedQuery(name = "Books.findByLikeKategori", query = "SELECT b FROM Books b JOIN b.categoriesList c WHERE c.nama = :parameter")})
+    @NamedQuery(name = "Books.findByLikeKategori", query = "SELECT b FROM Books b JOIN b.categoriesList c WHERE c.nama = :parameter"),
+    @NamedQuery(name = "Books.findAllWithKategori", query = "SELECT b FROM Books b JOIN b.categoriesList c WHERE c.nama = :kategori"),
+    @NamedQuery(name = "Books.findByLikeIsbnWithKategori", query = "SELECT b FROM Books b JOIN b.categoriesList c WHERE b.isbn LIKE :parameter AND c.nama = :kategori"),
+    @NamedQuery(name = "Books.findByLikeJudulWithKategori", query = "SELECT b FROM Books b JOIN b.categoriesList c WHERE UPPER(b.judul) LIKE UPPER(:parameter) AND c.nama = :kategori"),
+    @NamedQuery(name = "Books.findByLikePengarangWithKategori", query = "SELECT b FROM Books b JOIN b.categoriesList c WHERE UPPER(b.pengarang) LIKE UPPER(:parameter) AND c.nama = :kategori"),
+    @NamedQuery(name = "Books.findByLikePenerbitWithKategori", query = "SELECT b FROM Books b JOIN b.categoriesList c WHERE UPPER(b.penerbit) LIKE UPPER(:parameter) AND c.nama = :kategori"),
+    @NamedQuery(name = "Books.findByLikeTahunTerbitWithKategori", query = "SELECT b FROM Books b JOIN b.categoriesList c WHERE UPPER(b.tahunTerbit) LIKE UPPER(:parameter) AND c.nama = :kategori")})
 public class Books implements Serializable {
 
     private static final long serialVersionUID = 1L;

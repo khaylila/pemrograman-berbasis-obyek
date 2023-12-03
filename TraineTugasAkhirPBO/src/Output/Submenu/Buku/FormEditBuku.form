@@ -13,6 +13,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosed" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosed"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -270,7 +273,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/assets/img/logo-30x30.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Tambah Buku"/>
+            <Property name="text" type="java.lang.String" value="Ubah Buku"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">

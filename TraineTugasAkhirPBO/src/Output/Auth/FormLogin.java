@@ -112,7 +112,7 @@ public class FormLogin extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("SansSerif", 0, 18)); // NOI18N
         jLabel1.setText("Login Page");
 
-        jLabel3.setFont(new java.awt.Font("SansSerif", 1, 48)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Poppins", 1, 48)); // NOI18N
         jLabel3.setText("SI BUKU");
 
         inputPassword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -168,9 +168,10 @@ public class FormLogin extends javax.swing.JFrame {
                         .addComponent(inputUsername, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(inputPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(56, Short.MAX_VALUE))
+                        .addGap(29, 29, 29)
+                        .addComponent(btnLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(11, 11, 11)))
+                .addContainerGap(10, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -217,6 +218,9 @@ public class FormLogin extends javax.swing.JFrame {
             queryGetUsername.setParameter("username", inputUsername.getText().trim());
             try {
                 Users result = queryGetUsername.getSingleResult();
+                if (result == null) {
+                    System.out.println("hujanTurun");
+                }
                 if (BCrypt.checkpw(this.passwordToString(inputPassword.getPassword()), result.getPassword())) {
                     new Dashboard(result.getUserId()).setVisible(true);
                     this.dispose();
@@ -264,30 +268,31 @@ public class FormLogin extends javax.swing.JFrame {
     private void inputPasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputPasswordKeyTyped
         // TODO add your handling code here:
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            EntityManager entityManager = Persistence.createEntityManagerFactory("TraineTugasAkhirPBOPU").createEntityManager();
-            entityManager.getTransaction().begin();
-            TypedQuery<Users> queryGetUsername = entityManager.createNamedQuery("Users.findByUsername", Users.class);
-            queryGetUsername.setParameter("username", inputUsername.getText().trim());
-            List<Users> results = queryGetUsername.getResultList();
-
             if (inputUsername.getText().equals("") || new String(inputPassword.getPassword()).equals("")) {
                 this.peringatan("Username/Password tidak boleh kosong!");
-            } else if (results.isEmpty()) {
-                this.peringatan("Username/password salah!");
             } else {
-                for (Users data : results) {
-                    if (BCrypt.checkpw(this.passwordToString(inputPassword.getPassword()), data.getPassword())) {
-                        new Dashboard(data.getUserId()).setVisible(true);
+                EntityManager entityManager = Persistence.createEntityManagerFactory("TraineTugasAkhirPBOPU").createEntityManager();
+                entityManager.getTransaction().begin();
+                TypedQuery<Users> queryGetUsername = entityManager.createNamedQuery("Users.findByUsername", Users.class);
+                queryGetUsername.setParameter("username", inputUsername.getText().trim());
+                try {
+                    Users results = queryGetUsername.getSingleResult();
+
+                    if (BCrypt.checkpw(this.passwordToString(inputPassword.getPassword()), results.getPassword())) {
+                        new Dashboard(results.getUserId()).setVisible(true);
                         this.dispose();
-//                    this.peringatan("berhasil login!");
+                        this.peringatan("berhasil login!");
                     } else {
                         this.peringatan("Username/password salah!");
                     }
+                } catch (NoResultException e) {
+                    System.out.println(e.getMessage());
+                    this.peringatan("Username/password salah!");
                 }
-            }
 
-            entityManager.getTransaction().commit();
-            entityManager.close();
+                entityManager.getTransaction().commit();
+                entityManager.close();
+            }
         }
     }//GEN-LAST:event_inputPasswordKeyTyped
 

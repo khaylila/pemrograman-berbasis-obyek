@@ -12,12 +12,15 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.swing.table.DefaultTableModel;
 import Database.Books;
-import Database.Borrows;
+import Database.Categories;
+import Output.Submenu.Buku.ViewBuku;
+import Output.Submenu.Dashboard;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JTable;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -32,8 +35,12 @@ import net.sf.jasperreports.view.JasperViewer;
  */
 public class BookNew extends javax.swing.JPanel {
 
-    int userId;
-    ArrayList<Integer> listBooksId = new ArrayList<>();
+    private EntityManager entityManager = Persistence.createEntityManagerFactory("TraineTugasAkhirPBOPU").createEntityManager();
+    protected int userId;
+    protected String category = "all";
+//    protected List<Categories> listKategori = new ArrayList<>();
+    protected ArrayList<Integer> listBooksId = new ArrayList<>();
+    protected Object obj;
 
     /**
      * Creates new form BookNew
@@ -42,20 +49,30 @@ public class BookNew extends javax.swing.JPanel {
         initComponents();
     }
 
-    public BookNew(int userId) {
+    public BookNew(Object obj, int userId) {
+        this.obj = obj;
         this.userId = userId;
         initComponents();
+        TypedQuery<Categories> queryAllCategories = entityManager.createNamedQuery("Categories.findAll", Categories.class);
+        orderByKategori.removeAllItems();
+        orderByKategori.addItem("All");
+        for (Categories kategori : queryAllCategories.getResultList()) {
+//            this.listKategori.add(kategori);
+            orderByKategori.addItem(kategori.getNama());
+        }
         loadTabel();
     }
 
-    public void loadTabel() {
+    private List<Books> getQueryResult() {
         String search = inputSearch.getText().trim();
         if (search.equalsIgnoreCase("search")) {
             search = "";
         }
         int filter = searchBy.getSelectedIndex();
-        String query = "Books.findByLikeIsbn";
-        if (!search.equals("")) {
+        String query;
+//        if (!search.equals("")) {
+        if (category.equalsIgnoreCase("all")) {
+            query = "Books.findByLikeIsbn";
             if (filter == 1) {
                 query = "Books.findByLikeJudul";
             } else if (filter == 2) {
@@ -64,36 +81,65 @@ public class BookNew extends javax.swing.JPanel {
                 query = "Books.findByLikePenerbit";
             } else if (filter == 4) {
                 query = "Books.findBytahunTerbit";
-            } else if(filter == 5){
-                query = "Books.findByLikeKategori";
+            }
+        } else {
+            query = "Books.findByLikeIsbnWithKategori";
+            if (filter == 1) {
+                query = "Books.findByLikeJudulWithKategori";
+            } else if (filter == 2) {
+                query = "Books.findByLikePengarangWithKategori";
+            } else if (filter == 3) {
+                query = "Books.findByLikePenerbitWithKategori";
+            } else if (filter == 4) {
+                query = "Books.findByLikeTahunTerbitWithKategori";
             }
         }
+//        } else {
+//            query = "Books.findAllWithKategori";
+//        }
 
-        EntityManager entityManager = Persistence.createEntityManagerFactory("TraineTugasAkhirPBOPU").createEntityManager();
+        TypedQuery<Books> queryListBooks = null;
+        queryListBooks = entityManager.createNamedQuery(query, Books.class);
+//        if (!search.equals("")) {
+        queryListBooks.setParameter("parameter", "%" + search + "%");
+//        }
 
-        TypedQuery<Books> queryListStudents = null;
-        if (!search.equals("")) {
-            queryListStudents = entityManager.createNamedQuery(query, Books.class);
-            queryListStudents.setParameter("parameter", "%" + search + "%");
-        } else {
-            queryListStudents = entityManager.createNamedQuery("Books.findAll", Books.class);
+        if (!category.equalsIgnoreCase("all")) {
+            queryListBooks.setParameter("kategori", this.category);
         }
-        List<Books> listBooks = queryListStudents.getResultList();
+        List<Books> listBooks = queryListBooks.getResultList();
+        return listBooks;
+    }
+
+    public void loadTabel() {
+        List<Books> listBooks = this.getQueryResult();
 
         listBooksId.clear();
         DefaultTableModel model = (DefaultTableModel) tabelBuku.getModel();
         model.setRowCount(0);
         int i = 1;
         for (Books data : listBooks) {
-            Object[] baris = new Object[7];
+            Object[] baris = new Object[8];
             baris[0] = i++;
             listBooksId.add(data.getBookId());
             baris[1] = data.getIsbn();
             baris[2] = data.getJudul();
             baris[3] = data.getPengarang();
             baris[4] = data.getPenerbit();
-            baris[5] = data.getTahunTerbit();
-            baris[6] = data.getCreatedAt();
+
+//            begin kategori
+            String strKategori = "";
+            int j = 1;
+            for (Categories kategoriBuku : data.getCategoriesList()) {
+                strKategori += kategoriBuku.getNama();
+                if (data.getCategoriesList().size() > j++) {
+                    strKategori += ", ";
+                }
+            }
+            baris[5] = strKategori;
+//            endkategori
+            baris[6] = data.getTahunTerbit();
+            baris[7] = new SimpleDateFormat("dd/MM/yyyy").format(data.getCreatedAt());
             model.addRow(baris);
         }
     }
@@ -113,6 +159,7 @@ public class BookNew extends javax.swing.JPanel {
         btnPrint = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tabelBuku = new javax.swing.JTable();
+        orderByKategori = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -128,6 +175,9 @@ public class BookNew extends javax.swing.JPanel {
 
         inputSearch.setText("Search");
         inputSearch.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                inputSearchFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 inputSearchFocusLost(evt);
             }
@@ -153,20 +203,20 @@ public class BookNew extends javax.swing.JPanel {
 
         tabelBuku.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "No", "ISBN", "Judul", "Pengarang", "Penerbit", "Tahun Terbit", "Tgl Dibuat"
+                "No", "ISBN", "Judul", "Pengarang", "Penerbit", "Kategori", "Thn Terbit", "Tgl Ditambahkan"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -177,7 +227,20 @@ public class BookNew extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tabelBuku.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelBukuMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tabelBuku);
+
+        orderByKategori.setFont(new java.awt.Font("Liberation Sans", 0, 15)); // NOI18N
+        orderByKategori.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All" }));
+        orderByKategori.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                orderByKategoriItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -191,7 +254,9 @@ public class BookNew extends javax.swing.JPanel {
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 592, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 486, Short.MAX_VALUE)
+                        .addComponent(orderByKategori, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(searchBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(inputSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -206,6 +271,7 @@ public class BookNew extends javax.swing.JPanel {
                         .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(inputSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnPrint, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(orderByKategori)
                     .addComponent(searchBy))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 527, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -234,36 +300,7 @@ public class BookNew extends javax.swing.JPanel {
 
     private void btnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintActionPerformed
         // TODO add your handling code here:
-
-//        String search = inputSearch.getText().trim();
-//        if (search.equalsIgnoreCase("search")) {
-//            search = "";
-//        }
-//        int filter = searchBy.getSelectedIndex();
-//        String query = "Books.findByLikeIsbn";
-//        if (!search.equals("")) {
-//            if (filter == 1) {
-//                query = "Books.findByLikeJudul";
-//            } else if (filter == 2) {
-//                query = "Books.findByLikePengarang";
-//            } else if (filter == 3) {
-//                query = "Books.findByLikePenerbit";
-//            } else if (filter == 4) {
-//                query = "Books.findBytahunTerbit";
-//            }
-//        }
-//
-//        EntityManager entityManager = Persistence.createEntityManagerFactory("TraineTugasAkhirPBOPU").createEntityManager();
-//
-//        TypedQuery<Books> queryListStudents = null;
-//        if (!search.equals("")) {
-//            List<Borrows> resultQueryListBorrows = this.queryBorrow();
-//            queryListStudents = entityManager.createNamedQuery(query, Books.class);
-//            queryListStudents.setParameter("parameter", "%" + search + "%");
-//        } else {
-//            queryListStudents = entityManager.createNamedQuery("Books.findAll", Books.class);
-//        }
-//        List<Books> listBooks = queryListStudents.getResultList();
+//        List<Books> listBooks = getQueryResult();
 //
 //        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 //        List<HashMap<String, Object>> newResults = new ArrayList<>();
@@ -301,12 +338,39 @@ public class BookNew extends javax.swing.JPanel {
 //        }
     }//GEN-LAST:event_btnPrintActionPerformed
 
+    private void orderByKategoriItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_orderByKategoriItemStateChanged
+        // TODO add your handling code here:
+        evt.getSource();
+        if (!this.category.equalsIgnoreCase(evt.getItem().toString())) {
+            this.category = evt.getItem().toString();
+            loadTabel();
+        }
+    }//GEN-LAST:event_orderByKategoriItemStateChanged
+
+    private void inputSearchFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_inputSearchFocusGained
+        // TODO add your handling code here:
+        if (inputSearch.getText().equalsIgnoreCase("search")) {
+            inputSearch.setText("");
+        }
+    }//GEN-LAST:event_inputSearchFocusGained
+
+    private void tabelBukuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelBukuMouseClicked
+        // TODO add your handling code here:
+        ((Dashboard) this.obj).dispose();
+        JTable target = (JTable) evt.getSource();
+        int row = target.getSelectedRow();
+        System.out.println(target.getModel().getValueAt(row, 0).toString());
+        int index = Integer.valueOf(target.getModel().getValueAt(row, 0).toString());
+        new ViewBuku(userId, listBooksId.get((index - 1))).setVisible(true);
+    }//GEN-LAST:event_tabelBukuMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnPrint;
     private javax.swing.JTextField inputSearch;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JComboBox<String> orderByKategori;
     private javax.swing.JComboBox<String> searchBy;
     private javax.swing.JTable tabelBuku;
     // End of variables declaration//GEN-END:variables

@@ -7,6 +7,7 @@ package Output.Submenu;
 import Database.Categories;
 import Output.MainFrame;
 import Output.Submenu.Buku.FormBuku;
+import Output.Submenu.Buku.FormEditBuku;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -352,6 +353,8 @@ public class Kategori extends MainFrame {
         // TODO add your handling code here:
         if (obj instanceof FormBuku) {
             ((FormBuku) obj).setKategoriBuku(listSelectedKategoriId);
+        }else if (obj instanceof FormEditBuku) {
+            ((FormEditBuku) obj).setKategoriBuku(listSelectedKategoriId);
         }else{
             System.out.println("Ini bukan instance FormBuku!");
         }
