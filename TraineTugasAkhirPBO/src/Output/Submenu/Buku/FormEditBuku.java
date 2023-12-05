@@ -9,7 +9,7 @@ import Database.Categories;
 import Database.Students;
 import Database.Users;
 import Output.MainFrame;
-import Output.Submenu.Kategori;
+import Output.Submenu.CariKategori;
 import Output.Submenu.Mahasiswa.CariPenyumbangBuku;
 import View.BookNew;
 import java.awt.Image;
@@ -45,42 +45,7 @@ public class FormEditBuku extends MainFrame {
      * Creates new form FormBuku
      */
     public FormEditBuku() {
-        TypedQuery<Books> getBukuById = entityManager.createNamedQuery("Books.findByBookId", Books.class);
-        getBukuById.setParameter("bookId", 1);
-        this.buku = getBukuById.getSingleResult();
-        try {
-            initComponents();
-
-            inputJudul.setText(this.buku.getJudul());
-            inputIsbn.setText(this.buku.getIsbn());
-            inputJumlahHalaman.setText(String.valueOf(this.buku.getJumlahHalaman() == null ? "" : this.buku.getJumlahHalaman()));
-            inputSubJudul.setText(this.buku.getSubJudul());
-            inputPengarang.setText(this.buku.getPengarang());
-            inputPenerbit.setText(this.buku.getPenerbit());
-            inputTahunTerbit.setText(this.buku.getTahunTerbit());
-            inputBanyaknya.setText(String.valueOf(this.buku.getBanyaknya()));
-            labelPreview.setIcon(this.getImageFromDatabase(this.buku.getFotoSampul(), 150));
-            inputStudentId.setText(this.buku.getStudentId() != null ? this.buku.getStudentId().getFullname() : "");
-
-            String kategoriText = "";
-            int i = 1;
-            for (Categories kategori : this.buku.getCategoriesList()) {
-                kategoriText += kategori.getNama();
-                if (i != this.buku.getCategoriesList().size()) {
-                    kategoriText += ", ";
-                }
-                i++;
-                this.listSelectedCategory.add(kategori);
-            }
-            inputKategori.setText(kategoriText);
-
-            this.student = this.buku.getStudentId();
-            this.listSelectedCategory = this.buku.getCategoriesList();
-        } catch (NoResultException e) {
-            System.out.println(e.getMessage());
-            this.dispose();
-            this.peringatan("Buku tidak ditemukan!");
-        }
+        initComponents();
     }
 
     public FormEditBuku(int userId, int bookId) {
@@ -504,7 +469,7 @@ public class FormEditBuku extends MainFrame {
 
     private void inputKategoriMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inputKategoriMouseClicked
         // TODO add your handling code here:
-        new Kategori(this, userId).setVisible(true);
+        new CariKategori(this, userId).setVisible(true);
     }//GEN-LAST:event_inputKategoriMouseClicked
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed

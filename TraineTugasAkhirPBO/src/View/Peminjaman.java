@@ -7,6 +7,7 @@ package View;
 import Database.Borrows;
 import Output.Submenu.Peminjaman.FormPeminjaman;
 import Output.Submenu.Peminjaman.FormPeminjamanEdit;
+import Output.Submenu.Peminjaman.FormPeminjamanSkripsi;
 import java.awt.event.KeyEvent;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -60,7 +61,6 @@ public class Peminjaman extends javax.swing.JPanel {
     public void loadTable() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         List<Borrows> resultQueryListBorrows = this.queryBorrow();
-        System.out.println("brwlength=> " + resultQueryListBorrows.size());
         listPeminjam.clear();
         DefaultTableModel model = (DefaultTableModel) tabelPinjam.getModel();
         model.setRowCount(0);
@@ -100,6 +100,7 @@ public class Peminjaman extends javax.swing.JPanel {
         searchBy = new javax.swing.JComboBox<>();
         filterYear = new javax.swing.JComboBox<>();
         filterMonth = new javax.swing.JComboBox<>();
+        btnTambahPeminjamSkripsi = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setPreferredSize(new java.awt.Dimension(1240, 625));
@@ -150,7 +151,7 @@ public class Peminjaman extends javax.swing.JPanel {
         btnTambahPeminjam.setBackground(new java.awt.Color(255, 204, 0));
         btnTambahPeminjam.setForeground(new java.awt.Color(255, 255, 255));
         btnTambahPeminjam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/add-30x30.png"))); // NOI18N
-        btnTambahPeminjam.setText("Tambah");
+        btnTambahPeminjam.setText("Tambah Buku");
         btnTambahPeminjam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnTambahPeminjamActionPerformed(evt);
@@ -174,7 +175,7 @@ public class Peminjaman extends javax.swing.JPanel {
             }
         });
 
-        searchBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Judul", "Mahasiswa" }));
+        searchBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Judul", "Mahasiswa", "Angkatan", "Kategori Terbanyak" }));
 
         filterYear.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item1" }));
 
@@ -185,27 +186,40 @@ public class Peminjaman extends javax.swing.JPanel {
             }
         });
 
+        btnTambahPeminjamSkripsi.setBackground(new java.awt.Color(255, 204, 0));
+        btnTambahPeminjamSkripsi.setForeground(new java.awt.Color(255, 255, 255));
+        btnTambahPeminjamSkripsi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/add-30x30.png"))); // NOI18N
+        btnTambahPeminjamSkripsi.setText("Tambah Skripsi");
+        btnTambahPeminjamSkripsi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahPeminjamSkripsiActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnTambahPeminjam)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
-                        .addGap(388, 388, 388)
-                        .addComponent(filterMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(filterYear, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchBy, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(inputSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(btnTambahPeminjam)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnTambahPeminjamSkripsi)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(filterMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(filterYear, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(searchBy, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(inputSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1200, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -218,11 +232,12 @@ public class Peminjaman extends javax.swing.JPanel {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(searchBy, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(filterYear, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(filterMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(filterMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(inputSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnTambahPeminjam)
                         .addComponent(jButton2)
-                        .addComponent(inputSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnTambahPeminjamSkripsi)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15))
@@ -239,7 +254,6 @@ public class Peminjaman extends javax.swing.JPanel {
         JTable target = (JTable) evt.getSource();
         int row = target.getSelectedRow();
         int indexId = Integer.parseInt(target.getModel().getValueAt(row, 0).toString());
-        System.out.println(indexId);
         new FormPeminjamanEdit(this, listPeminjam.get((indexId - 1)).getPinjamId()).setVisible(true);
     }//GEN-LAST:event_tabelPinjamMouseClicked
 
@@ -253,57 +267,42 @@ public class Peminjaman extends javax.swing.JPanel {
             search = "";
         }
         int filter = searchBy.getSelectedIndex();
-        String query = "Borrows.findByBooksMonthYear";
+        String query = "Borrows.findByLikeBooksJudulWithMonthYear";
         if (!search.equals("")) {
             if (filter == 1) {
-                query = "Borrows.findByMahasiswaMonthYear";
+                query = "Borrows.findByLikeMahasiswaFullnameWithMonthYear";
+            } else if (filter == 2) {
+                query = "Borrows.findByLikeMahasiswaAngkatanWithMonthYear";
+            } else if (filter == 3) {
+
             }
         }
         EntityManager entityManager = Persistence.createEntityManagerFactory("TraineTugasAkhirPBOPU").createEntityManager();
         TypedQuery<Borrows> queryListBorrows = null;
-        if (!search.equals("")) {
-            queryListBorrows = entityManager.createNamedQuery(query, Borrows.class);
-            queryListBorrows.setParameter("parameter", "%" + search + "%");
-        } else {
-            queryListBorrows = entityManager.createNamedQuery("Borrows.findByMonthYear", Borrows.class);
-        }
+        queryListBorrows = entityManager.createNamedQuery(query, Borrows.class);
+        queryListBorrows.setParameter("parameter", "%" + search + "%");
         queryListBorrows.setParameter("month", ((filterMonth.getSelectedIndex() + 1)));
-        queryListBorrows.setParameter("year", Integer.parseInt(filterYear.getSelectedItem().toString()));
+        queryListBorrows.setParameter("year", Integer.valueOf(filterYear.getSelectedItem().toString()));
         return queryListBorrows.getResultList();
     }
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         List<Borrows> resultQueryListBorrows = this.queryBorrow();
+        resultQueryListBorrows.get(0).getStudentId();
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        List<HashMap<String, Object>> newResults = new ArrayList<>();
-        for (Borrows peminjam : resultQueryListBorrows) {
-            HashMap<String, Object> dataPeminjam = new HashMap<>();
-            dataPeminjam.put("judulBuku", peminjam.getBooksId().getJudul());
-            dataPeminjam.put("peminjam", peminjam.getStudentId().getFullname());
-            dataPeminjam.put("tanggalPinjam", simpleDateFormat.format(peminjam.getTanggalPinjam()));
-            dataPeminjam.put("rencanaKembali", simpleDateFormat.format(peminjam.getRencanaKembali()));
-            dataPeminjam.put("tanggalKembali", (peminjam.getTanggalKembali() != null ? simpleDateFormat.format(peminjam.getTanggalKembali()) : ""));
-            long timeStampNow = new Date().getTime() / 1000;
-            if (timeStampNow > (peminjam.getRencanaKembali().getTime() / 1000)) {
-                dataPeminjam.put("totalDenda", String.valueOf((timeStampNow - (peminjam.getRencanaKembali().getTime() / 1000)) / 86400 * peminjam.getDenda()));
-            }
-            newResults.add(dataPeminjam);
-        }
+        Long timeStampNow = new Date().getTime() / 1000;
 
         Map<String, Object> parameters = new HashMap<>();
         String desc = "Berikut adalah laporan pada bulan " + filterMonth.getSelectedItem().toString() + " " + filterYear.getSelectedItem().toString() + (inputSearch.getText().equals("") ? " berdasarkan pencarian '" + inputSearch.getText() + "' pada " + searchBy.getSelectedItem() : "");
         parameters.put("desc", desc);
-//        parameters.put("querySearch", inputSearch.getText());
-//        parameters.put("searchBy", searchBy.getSelectedItem());
-//        parameters.put("month", filterMonth.getSelectedItem().toString());
-//        parameters.put("year", Integer.parseInt(filterYear.getSelectedItem().toString()));
+        parameters.put("ts", timeStampNow);
+        parameters.put("simpleDateFormat", new SimpleDateFormat("dd/MM/yyyy"));
 
         try {
             String jrxmlFile = new String("src/Report/peminjaman.jrxml");
             JasperReport jr = JasperCompileManager.compileReport(jrxmlFile);
-            JasperPrint jp = JasperFillManager.fillReport(jr, parameters, new JRBeanCollectionDataSource(newResults));
+            JasperPrint jp = JasperFillManager.fillReport(jr, parameters, new JRBeanCollectionDataSource(resultQueryListBorrows));
             JasperViewer.viewReport(jp, false);
         } catch (JRException ex) {
             System.out.println(ex.getMessage());
@@ -319,9 +318,15 @@ public class Peminjaman extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_inputSearchKeyTyped
 
+    private void btnTambahPeminjamSkripsiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahPeminjamSkripsiActionPerformed
+        // TODO add your handling code here:
+        new FormPeminjamanSkripsi(this, this.userId).setVisible(true);
+    }//GEN-LAST:event_btnTambahPeminjamSkripsiActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnTambahPeminjam;
+    private javax.swing.JButton btnTambahPeminjamSkripsi;
     private javax.swing.JComboBox<String> filterMonth;
     private javax.swing.JComboBox<String> filterYear;
     private javax.swing.JTextField inputSearch;

@@ -8,6 +8,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.Random;
 import javax.imageio.ImageIO;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -52,5 +53,14 @@ public class MainFrame extends javax.swing.JFrame {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    protected String generatePassword() {
+        String pass = "";
+        Random random = new Random();
+        for (int i = 0; i < 6; i++) {
+            pass += String.valueOf(random.nextInt(10));
+        }
+        return pass;
     }
 }

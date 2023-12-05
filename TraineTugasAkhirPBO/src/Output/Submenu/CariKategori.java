@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author milea
  */
-public class Kategori extends MainFrame {
+public class CariKategori extends MainFrame {
 
     int userId;
     Object obj;
@@ -30,11 +30,11 @@ public class Kategori extends MainFrame {
     /**
      * Creates new form Kategori
      */
-    public Kategori() {
+    public CariKategori() {
 //        initComponents();
     }
 
-    public Kategori(Object obj, int userId) {
+    public CariKategori(Object obj, int userId) {
         this.userId = userId;
         this.obj = obj;
         initComponents();
@@ -112,7 +112,7 @@ public class Kategori extends MainFrame {
 
         jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/logo-30x30.png"))); // NOI18N
-        jLabel1.setText("Kategori");
+        jLabel1.setText("Cari Kategori Buku");
 
         btnAdd.setBackground(new java.awt.Color(255, 204, 0));
         btnAdd.setForeground(new java.awt.Color(255, 255, 255));
@@ -384,20 +384,21 @@ public class Kategori extends MainFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Kategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CariKategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Kategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CariKategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Kategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CariKategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Kategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CariKategori.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Kategori().setVisible(true);
+                new CariKategori().setVisible(true);
             }
         });
     }

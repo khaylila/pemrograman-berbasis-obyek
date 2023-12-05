@@ -37,9 +37,14 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Borrows.findByCreatedAt", query = "SELECT b FROM Borrows b WHERE b.createdAt = :createdAt"),
     @NamedQuery(name = "Borrows.findByUpdatedAt", query = "SELECT b FROM Borrows b WHERE b.updatedAt = :updatedAt"),
     @NamedQuery(name = "Borrows.findByMonthYear", query = "SELECT b FROM Borrows b WHERE EXTRACT(MONTH FROM b.createdAt) = :month AND EXTRACT(YEAR FROM b.createdAt) = :year"),
-    @NamedQuery(name = "Borrows.findByMahasiswaMonthYear", query = "SELECT b FROM Borrows b WHERE LOWER(b.studentId.fullname) LIKE LOWER(:parameter) AND EXTRACT(MONTH FROM b.createdAt) = :month AND EXTRACT(YEAR FROM b.createdAt) = :year"),
-    @NamedQuery(name = "Borrows.findByBooksMonthYear", query = "SELECT b FROM Borrows b WHERE LOWER(b.booksId.judul) LIKE LOWER(:parameter) AND EXTRACT(MONTH FROM b.createdAt) = :month AND EXTRACT(YEAR FROM b.createdAt) = :year"),
-    @NamedQuery(name = "Borrows.findByBookId", query = "SELECT b FROM Borrows b WHERE b.booksId.bookId = :bookId")})
+    @NamedQuery(name = "Borrows.findByLikeMahasiswaFullnameWithMonthYear", query = "SELECT b FROM Borrows b WHERE LOWER(b.studentId.fullname) LIKE LOWER(:parameter) AND EXTRACT(MONTH FROM b.createdAt) = :month AND EXTRACT(YEAR FROM b.createdAt) = :year"),
+    @NamedQuery(name = "Borrows.findByLikeBooksJudulWithMonthYear", query = "SELECT b FROM Borrows b WHERE LOWER(b.booksId.judul) LIKE LOWER(:parameter) AND EXTRACT(MONTH FROM b.createdAt) = :month AND EXTRACT(YEAR FROM b.createdAt) = :year"),
+    @NamedQuery(name = "Borrows.findByLikeMahasiswaAngkatanWithMonthYear", query = "SELECT b FROM Borrows b WHERE CAST(b.studentId.angkatan AS text) LIKE :parameter AND EXTRACT(MONTH FROM b.createdAt) = :month AND EXTRACT(YEAR FROM b.createdAt) = :year"),
+    @NamedQuery(name = "Borrows.findByKategoriTerbanyak", query = "SELECT b FROM Borrows b WHERE EXTRACT(MONTH FROM b.createdAt) = :month AND EXTRACT(YEAR FROM b.createdAt) = :year"),
+    @NamedQuery(name = "Borrows.findByBookId", query = "SELECT b FROM Borrows b WHERE b.booksId.bookId = :bookId"),
+    @NamedQuery(name = "Borrows.findByTesisId", query = "SELECT b FROM Borrows b WHERE b.tesisId.tesisId = :tesisId"),
+    @NamedQuery(name = "Borrows.findByUserId", query = "SELECT b FROM Borrows b WHERE b.userId.userId = :userId"),
+    @NamedQuery(name = "Borrows.findMostBorrowedBooks", query = "SELECT b.booksId.bookId, COUNT(b.booksId.bookId) AS totalBorrows FROM Borrows b JOIN b.booksId bb GROUP BY bb.bookId ORDER BY COUNT(bb.bookId) DESC")})
 public class Borrows implements Serializable {
 
     private static final long serialVersionUID = 1L;

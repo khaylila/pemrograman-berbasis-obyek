@@ -4,13 +4,36 @@
   <NonVisualComponents>
     <Menu class="javax.swing.JMenuBar" name="menuBar1">
       <SubComponents>
-        <Menu class="javax.swing.JMenu" name="menuFile">
+        <Menu class="javax.swing.JMenu" name="menuLanjutan">
           <Properties>
-            <Property name="text" type="java.lang.String" value="File"/>
+            <Property name="text" type="java.lang.String" value="Pengaturan"/>
           </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuFileMouseClicked"/>
-          </Events>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="dataMahasiswa">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Data Mahasiswa"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dataMahasiswaActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="kategori">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Kategori"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="kategoriActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="dataUser">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Users"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dataUserActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuDashboard">
           <Properties>
@@ -21,30 +44,46 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Buku"/>
           </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuBukuMouseClicked"/>
-          </Events>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="dataBuku">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Data Buku"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dataBukuActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuSkripsi">
           <Properties>
             <Property name="text" type="java.lang.String" value="Skripsi"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="dataSkripsi">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Data Skripsi"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dataSkripsiActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="menuPeminjaman">
           <Properties>
             <Property name="text" type="java.lang.String" value="Peminjaman"/>
           </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuPeminjamanMouseClicked"/>
-          </Events>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="menuMahasiswa">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Data Mahasiswa"/>
-          </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="menuMahasiswaMouseClicked"/>
-          </Events>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="dataPeminjaman">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Data Peminjaman"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="dataPeminjamanActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
         </Menu>
       </SubComponents>
     </Menu>

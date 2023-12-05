@@ -4,42 +4,62 @@
  */
 package Output.Submenu.Mahasiswa;
 
+import Database.Books;
+import Database.Categories;
 import Database.Students;
 import Database.Users;
 import Output.Auth.FormLogin;
 import Output.MainFrame;
+import Output.Submenu.Buku.ViewBuku;
 import java.time.LocalDate;
 import java.util.Date;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 /**
  *
  * @author milea
  */
-public class FormMahasiswa extends MainFrame {
+public class FormEditMahasiswa extends MainFrame {
 
     int userId;
-    Object obj;
+    Students student;
 
     /**
      * Creates new form FormMahasiswa
      */
-    public FormMahasiswa() {
+    public FormEditMahasiswa() {
         initComponents();
-        this.dispose();
-        new FormLogin().setVisible(true);
     }
 
-    public FormMahasiswa(Object obj, int userId) {
-        this.obj = obj;
+    public FormEditMahasiswa(int userId, int studentId) {
         this.userId = userId;
-        initComponents();
-        selectAngkatan.removeAllItems();
-        LocalDate lDate = LocalDate.now();
-        int currentYear = lDate.getYear();
+        TypedQuery<Students> getStudentById = entityManager.createNamedQuery("Students.findByStudentId", Students.class);
+        getStudentById.setParameter("studentId", studentId);
+        this.student = getStudentById.getSingleResult();
+        try {
+            initComponents();
 
-        for (int i = currentYear; i >= 2014; i--) {
-            selectAngkatan.addItem(String.valueOf(i));
+            inputNama.setText(this.student.getFullname());
+            inputAlamat.setText(this.student.getAlamat());
+            inputNIM.setText(this.student.getNim());
+            inputTelepon.setText(this.student.getTelepon());
+
+            selectAngkatan.removeAllItems();
+            LocalDate lDate = LocalDate.now();
+            int currentYear = lDate.getYear();
+
+            for (int i = currentYear; i >= 2014; i--) {
+                selectAngkatan.addItem(String.valueOf(i));
+                if(i == this.student.getAngkatan()){
+                    selectAngkatan.setSelectedItem(i);
+                }
+            }
+
+        } catch (NoResultException e) {
+            System.out.println(e.getMessage());
+            this.dispose();
+            this.peringatan("Buku tidak ditemukan!");
         }
     }
 
@@ -68,12 +88,17 @@ public class FormMahasiswa extends MainFrame {
         btnSave = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Liberation Sans", 1, 15)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/img/logo-30x30.png"))); // NOI18N
-        jLabel1.setText("Tambah Mahasiswa");
+        jLabel1.setText("Ubah Mahasiswa");
 
         jLabel2.setText("NIM");
 
@@ -202,39 +227,33 @@ public class FormMahasiswa extends MainFrame {
         } else {
             try {
                 Date date = new Date();
-                Students newStudent = new Students();
-                newStudent.setNim(NIM);
-                newStudent.setFullname(fullname);
-                newStudent.setAngkatan(angkatan);
-                newStudent.setTelepon(telpon);
-                newStudent.setAlamat(alamat);
+                Students oldStudent = this.student;
+                oldStudent.setNim(NIM);
+                oldStudent.setFullname(fullname);
+                oldStudent.setAngkatan(angkatan);
+                oldStudent.setTelepon(telpon);
+                oldStudent.setAlamat(alamat);
 
-                newStudent.setCreatedAt(date);
-                newStudent.setUpdatedAt(date);
-
-                TypedQuery<Users> queryGetUsername = entityManager.createNamedQuery("Users.findByUserId", Users.class);
-                queryGetUsername.setParameter("userId", userId);
-                Users result = queryGetUsername.getSingleResult();
-                newStudent.setUserId(result);
+                oldStudent.setUpdatedAt(date);
 
                 entityManager.getTransaction().begin();
-                entityManager.persist(newStudent);
+                entityManager.merge(oldStudent);
                 entityManager.getTransaction().commit();
 
-                if (obj instanceof CariPenyumbangBuku) {
-                    ((CariPenyumbangBuku) obj).loadData();
-                } else {
-                    System.out.println("Ini bukan instance!!!");
-                }
-                this.peringatan("Berhasil menyimpan data mahasiswa!");
+                this.peringatan("Berhasil mengubah data mahasiswa!");
                 this.dispose();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                this.peringatan("Gagal menyimpan data mahasiswa!");
+                this.peringatan("Gagal mengubah data mahasiswa!");
                 entityManager.getTransaction().rollback();
             }
         }
     }//GEN-LAST:event_btnSaveActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        // TODO add your handling code here:
+        new ViewMahasiswa(userId, this.student.getStudentId()).setVisible(true);
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -253,20 +272,21 @@ public class FormMahasiswa extends MainFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormMahasiswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormEditMahasiswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormMahasiswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormEditMahasiswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormMahasiswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormEditMahasiswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormMahasiswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormEditMahasiswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormMahasiswa().setVisible(true);
+                new FormEditMahasiswa().setVisible(true);
             }
         });
     }

@@ -4,14 +4,15 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="desc" class="java.lang.String"/>
-	<parameter name="ts" class="java.lang.Long"/>
-	<parameter name="simpleDateFormat" class="java.text.SimpleDateFormat"/>
-	<field name="booksId" class="Database.Books"/>
+	<field name="judul" class="java.lang.String"/>
+	<field name="subJudul" class="java.lang.String"/>
+	<field name="pengarang" class="java.lang.String"/>
+	<field name="penerbit" class="java.lang.String"/>
+	<field name="tahunTerbit" class="java.lang.String"/>
+	<field name="createdAt" class="java.util.Date"/>
+	<field name="jumlahHalaman" class="java.lang.Integer"/>
+	<field name="banyaknya" class="java.lang.Integer"/>
 	<field name="studentId" class="Database.Students"/>
-	<field name="tanggalPinjam" class="java.util.Date"/>
-	<field name="rencanaKembali" class="java.util.Date"/>
-	<field name="tanggalKembali" class="java.util.Date"/>
-	<field name="denda" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -42,20 +43,6 @@
 	<columnHeader>
 		<band height="24" splitType="Stretch">
 			<staticText>
-				<reportElement x="43" y="0" width="117" height="24" uuid="ceb578d2-573c-4bb4-b45e-05094995b835"/>
-				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Judul Buku]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="0" y="0" width="43" height="24" uuid="f105b3c9-e1d2-492f-8cc8-687357dc4889"/>
 				<box>
 					<pen lineWidth="1.0"/>
@@ -70,7 +57,7 @@
 				<text><![CDATA[No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="160" y="0" width="83" height="24" uuid="393fcc3a-24d2-42dd-9d5f-146e5e64a5f4"/>
+				<reportElement x="43" y="0" width="100" height="24" uuid="393fcc3a-24d2-42dd-9d5f-146e5e64a5f4"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -81,10 +68,10 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Peminjam]]></text>
+				<text><![CDATA[Judul]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="243" y="0" width="60" height="24" uuid="245c4f6f-a76d-4211-a6a9-cfb579be6536"/>
+				<reportElement x="263" y="0" width="50" height="24" uuid="245c4f6f-a76d-4211-a6a9-cfb579be6536"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -95,10 +82,10 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Tgl Pinjam]]></text>
+				<text><![CDATA[Penerbit]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="303" y="0" width="60" height="24" uuid="df8c354a-f208-43fb-9589-4775e4b85bcd"/>
+				<reportElement x="475" y="0" width="80" height="24" uuid="df8c354a-f208-43fb-9589-4775e4b85bcd"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -109,10 +96,10 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Rencana Kembali]]></text>
+				<text><![CDATA[Tgl Ditambahkan]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="363" y="0" width="60" height="24" uuid="58502fff-bf1e-4e6a-bef3-7c7fa3dd320c"/>
+				<reportElement x="143" y="0" width="60" height="24" uuid="ceb578d2-573c-4bb4-b45e-05094995b835"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -123,10 +110,10 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Tgl Kembali]]></text>
+				<text><![CDATA[Subjudul]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="423" y="0" width="48" height="24" uuid="cbce5c24-c7a5-49fd-bcdd-1dff8ece7bc9"/>
+				<reportElement x="203" y="0" width="60" height="24" uuid="f3c9dd9f-2ba4-4edc-9203-36a2f9eaeca6"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -137,10 +124,10 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Denda]]></text>
+				<text><![CDATA[Pgr]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="471" y="0" width="84" height="24" uuid="0c071bfe-2fc7-4b25-95ae-b80e0873ac18"/>
+				<reportElement x="313" y="0" width="30" height="24" uuid="0eae956b-9c19-45a4-9201-2389a80b1431"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -151,26 +138,56 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Status]]></text>
+				<text><![CDATA[Thn]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="0" width="30" height="24" uuid="afa680e1-be0f-44cc-8910-3fe57d87541d"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hlm]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="373" y="0" width="30" height="24" uuid="6ec8aac6-dbc9-4360-bd94-8d2ee4d5e1dd"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Qty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="403" y="0" width="72" height="24" uuid="990c75f5-afa8-47e8-8b4b-e92c73a0c0ce"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Disumbangkan Oleh]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="40" splitType="Stretch">
+		<band height="76" splitType="Stretch">
 			<textField>
-				<reportElement x="43" y="0" width="117" height="40" uuid="adbf1ae6-1543-45a4-ab03-1eb8f501cf89"/>
-				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{booksId}.getJudul()]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="0" y="0" width="43" height="40" uuid="0721e4af-207c-4952-b71b-d41a7a19b18b"/>
+				<reportElement x="0" y="0" width="43" height="76" uuid="0721e4af-207c-4952-b71b-d41a7a19b18b"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -182,7 +199,103 @@
 				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="160" y="0" width="83" height="40" uuid="16e65623-a723-4f1b-aeb1-d806cf209a26"/>
+				<reportElement x="43" y="0" width="100" height="76" uuid="16e65623-a723-4f1b-aeb1-d806cf209a26"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{judul}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="263" y="0" width="50" height="76" uuid="2b12afe7-2d36-4b5c-84bf-056402f1c33b"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{penerbit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="143" y="0" width="60" height="76" uuid="adbf1ae6-1543-45a4-ab03-1eb8f501cf89"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{subJudul}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="475" y="0" width="80" height="76" uuid="41625286-e0da-41d5-989c-46cf320fdfdc"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.text.SimpleDateFormat("dd/MM/yyyy").format($F{createdAt})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="203" y="0" width="60" height="76" uuid="0a54b41e-c125-495b-8cc5-6220d9876e48"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pengarang}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="313" y="0" width="30" height="76" uuid="432589da-8cfd-4a31-b1e2-bc4a597a826d"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tahunTerbit}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="343" y="0" width="30" height="76" uuid="cc558f02-4eaf-4090-a13b-2ead4464ce96"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{jumlahHalaman}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="373" y="0" width="30" height="76" uuid="8c98df3a-39d4-459b-aa75-adb36355fc21"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{banyaknya}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="403" y="0" width="72" height="76" uuid="2934db59-f6f9-42ec-84c0-38f4756b1bcf"/>
 				<box>
 					<pen lineWidth="1.0"/>
 					<topPen lineWidth="1.0"/>
@@ -192,66 +305,6 @@
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{studentId}.getFullname()]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="243" y="0" width="60" height="40" uuid="2b12afe7-2d36-4b5c-84bf-056402f1c33b"/>
-				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{simpleDateFormat}.format($F{tanggalPinjam})]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="303" y="0" width="60" height="40" uuid="41625286-e0da-41d5-989c-46cf320fdfdc"/>
-				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{simpleDateFormat}.format($F{rencanaKembali})]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="363" y="0" width="60" height="40" uuid="48bacd90-88bd-4ef4-88b4-ed9c11e18f0c"/>
-				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{tanggalKembali} != null ? $P{simpleDateFormat}.format($F{tanggalKembali}) : "-"]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="423" y="0" width="48" height="40" uuid="0643f20f-7b84-4132-be2e-3a4babf59a8b"/>
-				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Rp " + (($P{ts} > ($F{rencanaKembali}.getTime() / 1000)) ? ($P{ts} - ($F{rencanaKembali}.getTime() / 1000)) / 86400 * $F{denda} : 0)]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="471" y="0" width="84" height="40" uuid="66333dad-a1cd-47a5-a503-1bfa0b879e93"/>
-				<box>
-					<pen lineWidth="1.0"/>
-					<topPen lineWidth="1.0"/>
-					<leftPen lineWidth="1.0"/>
-					<bottomPen lineWidth="1.0"/>
-					<rightPen lineWidth="1.0"/>
-				</box>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{tanggalKembali} != null ? "Sudah Dikembalikan" : "Belum dikembalikan"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
@@ -263,7 +316,7 @@
 			<textField>
 				<reportElement x="21" y="34" width="534" height="20" uuid="2f362219-b9e9-416f-b279-a123c7d44e1a"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA["Dicetak pada :" + new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date())]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Dicetak pada: " + new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(new java.util.Date())]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

@@ -55,7 +55,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Books.findByLikeJudulWithKategori", query = "SELECT b FROM Books b JOIN b.categoriesList c WHERE UPPER(b.judul) LIKE UPPER(:parameter) AND c.nama = :kategori"),
     @NamedQuery(name = "Books.findByLikePengarangWithKategori", query = "SELECT b FROM Books b JOIN b.categoriesList c WHERE UPPER(b.pengarang) LIKE UPPER(:parameter) AND c.nama = :kategori"),
     @NamedQuery(name = "Books.findByLikePenerbitWithKategori", query = "SELECT b FROM Books b JOIN b.categoriesList c WHERE UPPER(b.penerbit) LIKE UPPER(:parameter) AND c.nama = :kategori"),
-    @NamedQuery(name = "Books.findByLikeTahunTerbitWithKategori", query = "SELECT b FROM Books b JOIN b.categoriesList c WHERE UPPER(b.tahunTerbit) LIKE UPPER(:parameter) AND c.nama = :kategori")})
+    @NamedQuery(name = "Books.findByLikeTahunTerbitWithKategori", query = "SELECT b FROM Books b JOIN b.categoriesList c WHERE b.tahunTerbit LIKE :parameter AND c.nama = :kategori"),
+    @NamedQuery(name = "Books.findByUserId", query = "SELECT b FROM Books b JOIN b.studentId s WHERE b.userId.userId = :userId")})
 public class Books implements Serializable {
 
     private static final long serialVersionUID = 1L;

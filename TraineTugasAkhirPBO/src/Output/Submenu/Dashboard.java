@@ -7,7 +7,10 @@ package Output.Submenu;
 import Output.Auth.FormLogin;
 import Output.Submenu.Mahasiswa.CariPenyumbangBuku;
 import View.BookNew;
+import View.Mahasiswa;
 import View.Peminjaman;
+import View.TesisView;
+import View.UsersView;
 
 /**
  *
@@ -30,6 +33,16 @@ public class Dashboard extends javax.swing.JFrame {
             panelMain.add(new BookNew(this, userId));
             panelMain.repaint();
             panelMain.revalidate();
+        } else if (panel.equalsIgnoreCase("Thesis")) {
+            panelMain.removeAll();
+            panelMain.add(new TesisView(this, userId));
+            panelMain.repaint();
+            panelMain.revalidate();
+        } else if (panel.equalsIgnoreCase("Students")) {
+            panelMain.removeAll();
+            panelMain.add(new Mahasiswa(this, userId));
+            panelMain.repaint();
+            panelMain.revalidate();
         }
     }
 
@@ -38,7 +51,6 @@ public class Dashboard extends javax.swing.JFrame {
      */
     public Dashboard() {
         this.dispose();
-        new FormLogin().setVisible(true);
     }
 
     /**
@@ -52,12 +64,17 @@ public class Dashboard extends javax.swing.JFrame {
 
         panelMain = new javax.swing.JPanel();
         menuBar1 = new javax.swing.JMenuBar();
-        menuFile = new javax.swing.JMenu();
+        menuLanjutan = new javax.swing.JMenu();
+        dataMahasiswa = new javax.swing.JMenuItem();
+        kategori = new javax.swing.JMenuItem();
+        dataUser = new javax.swing.JMenuItem();
         menuDashboard = new javax.swing.JMenu();
         menuBuku = new javax.swing.JMenu();
+        dataBuku = new javax.swing.JMenuItem();
         menuSkripsi = new javax.swing.JMenu();
+        dataSkripsi = new javax.swing.JMenuItem();
         menuPeminjaman = new javax.swing.JMenu();
-        menuMahasiswa = new javax.swing.JMenu();
+        dataPeminjaman = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SI Buku");
@@ -67,43 +84,72 @@ public class Dashboard extends javax.swing.JFrame {
         panelMain.setPreferredSize(new java.awt.Dimension(1240, 680));
         panelMain.setLayout(new java.awt.BorderLayout());
 
-        menuFile.setText("File");
-        menuFile.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuFileMouseClicked(evt);
+        menuLanjutan.setText("Pengaturan");
+
+        dataMahasiswa.setText("Data Mahasiswa");
+        dataMahasiswa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dataMahasiswaActionPerformed(evt);
             }
         });
-        menuBar1.add(menuFile);
+        menuLanjutan.add(dataMahasiswa);
+
+        kategori.setText("Kategori");
+        kategori.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kategoriActionPerformed(evt);
+            }
+        });
+        menuLanjutan.add(kategori);
+
+        dataUser.setText("Users");
+        dataUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dataUserActionPerformed(evt);
+            }
+        });
+        menuLanjutan.add(dataUser);
+
+        menuBar1.add(menuLanjutan);
 
         menuDashboard.setText("Dashboard");
         menuBar1.add(menuDashboard);
 
         menuBuku.setText("Buku");
-        menuBuku.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuBukuMouseClicked(evt);
+
+        dataBuku.setText("Data Buku");
+        dataBuku.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dataBukuActionPerformed(evt);
             }
         });
+        menuBuku.add(dataBuku);
+
         menuBar1.add(menuBuku);
 
         menuSkripsi.setText("Skripsi");
+
+        dataSkripsi.setText("Data Skripsi");
+        dataSkripsi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dataSkripsiActionPerformed(evt);
+            }
+        });
+        menuSkripsi.add(dataSkripsi);
+
         menuBar1.add(menuSkripsi);
 
         menuPeminjaman.setText("Peminjaman");
-        menuPeminjaman.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuPeminjamanMouseClicked(evt);
-            }
-        });
-        menuBar1.add(menuPeminjaman);
 
-        menuMahasiswa.setText("Data Mahasiswa");
-        menuMahasiswa.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuMahasiswaMouseClicked(evt);
+        dataPeminjaman.setText("Data Peminjaman");
+        dataPeminjaman.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dataPeminjamanActionPerformed(evt);
             }
         });
-        menuBar1.add(menuMahasiswa);
+        menuPeminjaman.add(dataPeminjaman);
+
+        menuBar1.add(menuPeminjaman);
 
         setJMenuBar(menuBar1);
 
@@ -122,32 +168,50 @@ public class Dashboard extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void menuFileMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuFileMouseClicked
+    private void kategoriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kategoriActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_menuFileMouseClicked
+        new FormKategori(userId).setVisible(true);
+    }//GEN-LAST:event_kategoriActionPerformed
 
-    private void menuBukuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuBukuMouseClicked
+    private void dataMahasiswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataMahasiswaActionPerformed
         // TODO add your handling code here:
-        System.out.println(userId);
         panelMain.removeAll();
-        panelMain.add(new BookNew(this, userId));
+        panelMain.add(new Mahasiswa(this, userId));
         panelMain.repaint();
         panelMain.revalidate();
-    }//GEN-LAST:event_menuBukuMouseClicked
+    }//GEN-LAST:event_dataMahasiswaActionPerformed
 
-    private void menuPeminjamanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPeminjamanMouseClicked
+    private void dataPeminjamanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataPeminjamanActionPerformed
         // TODO add your handling code here:
-        System.out.println(userId);
         panelMain.removeAll();
         panelMain.add(new Peminjaman(userId));
         panelMain.repaint();
         panelMain.revalidate();
-    }//GEN-LAST:event_menuPeminjamanMouseClicked
+    }//GEN-LAST:event_dataPeminjamanActionPerformed
 
-    private void menuMahasiswaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMahasiswaMouseClicked
+    private void dataSkripsiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataSkripsiActionPerformed
         // TODO add your handling code here:
-        new CariPenyumbangBuku(userId).setVisible(true);
-    }//GEN-LAST:event_menuMahasiswaMouseClicked
+        panelMain.removeAll();
+        panelMain.add(new TesisView(this, userId));
+        panelMain.repaint();
+        panelMain.revalidate();
+    }//GEN-LAST:event_dataSkripsiActionPerformed
+
+    private void dataBukuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataBukuActionPerformed
+        // TODO add your handling code here:
+        panelMain.removeAll();
+        panelMain.add(new BookNew(this, userId));
+        panelMain.repaint();
+        panelMain.revalidate();
+    }//GEN-LAST:event_dataBukuActionPerformed
+
+    private void dataUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dataUserActionPerformed
+        // TODO add your handling code here:
+        panelMain.removeAll();
+        panelMain.add(new UsersView(this, userId));
+        panelMain.repaint();
+        panelMain.revalidate();
+    }//GEN-LAST:event_dataUserActionPerformed
 
     /**
      * @param args the command line arguments
@@ -185,11 +249,16 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem dataBuku;
+    private javax.swing.JMenuItem dataMahasiswa;
+    private javax.swing.JMenuItem dataPeminjaman;
+    private javax.swing.JMenuItem dataSkripsi;
+    private javax.swing.JMenuItem dataUser;
+    private javax.swing.JMenuItem kategori;
     private javax.swing.JMenuBar menuBar1;
     private javax.swing.JMenu menuBuku;
     private javax.swing.JMenu menuDashboard;
-    private javax.swing.JMenu menuFile;
-    private javax.swing.JMenu menuMahasiswa;
+    private javax.swing.JMenu menuLanjutan;
     private javax.swing.JMenu menuPeminjaman;
     private javax.swing.JMenu menuSkripsi;
     private javax.swing.JPanel panelMain;

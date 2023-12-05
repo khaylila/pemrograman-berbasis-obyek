@@ -10,6 +10,9 @@ import Output.MainFrame;
 import Output.Submenu.Buku.FormBuku;
 import Output.Submenu.Buku.FormEditBuku;
 import Output.Submenu.Peminjaman.FormPeminjaman;
+import Output.Submenu.Peminjaman.FormPeminjamanSkripsi;
+import Output.Tesis.FormEditTesis;
+import Output.Tesis.FormTesis;
 import java.util.List;
 import java.util.ArrayList;
 import javax.persistence.TypedQuery;
@@ -261,8 +264,14 @@ public class CariPenyumbangBuku extends MainFrame {
             ((FormBuku) obj).setMahasiswaId(studentId);
         } else if (obj instanceof FormPeminjaman) {
             ((FormPeminjaman) obj).setMahasiswaId(studentId);
+        } else if (obj instanceof FormPeminjamanSkripsi) {
+            ((FormPeminjamanSkripsi) obj).setMahasiswaId(studentId);
         } else if (obj instanceof FormEditBuku) {
             ((FormEditBuku) obj).setMahasiswaId(studentId);
+        } else if (obj instanceof FormTesis) {
+            ((FormTesis) obj).setMahasiswaId(studentId);
+        } else if (obj instanceof FormEditTesis) {
+            ((FormEditTesis) obj).setMahasiswaId(studentId);
         } else {
             System.out.println("bukan instance FormBuku dan FormPeminjaman");
         }

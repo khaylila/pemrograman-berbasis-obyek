@@ -6,7 +6,6 @@ package Database;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,7 +17,6 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -36,7 +34,12 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Thesis.findByTahunTerbit", query = "SELECT t FROM Thesis t WHERE t.tahunTerbit = :tahunTerbit"),
     @NamedQuery(name = "Thesis.findByJumlahHalaman", query = "SELECT t FROM Thesis t WHERE t.jumlahHalaman = :jumlahHalaman"),
     @NamedQuery(name = "Thesis.findByCreatedAt", query = "SELECT t FROM Thesis t WHERE t.createdAt = :createdAt"),
-    @NamedQuery(name = "Thesis.findByUpdatedAt", query = "SELECT t FROM Thesis t WHERE t.updatedAt = :updatedAt")})
+    @NamedQuery(name = "Thesis.findByUpdatedAt", query = "SELECT t FROM Thesis t WHERE t.updatedAt = :updatedAt"),
+    @NamedQuery(name = "Thesis.findByBanyaknya", query = "SELECT t FROM Thesis t WHERE t.banyaknya = :banyaknya"),
+    @NamedQuery(name = "Thesis.findByLikeJudul", query = "SELECT t FROM Thesis t WHERE UPPER(t.judul) LIKE UPPER(:parameter)"),
+    @NamedQuery(name = "Thesis.findByLikeTahunTerbit", query = "SELECT t FROM Thesis t WHERE t.tahunTerbit LIKE :paramter"),
+    @NamedQuery(name = "Thesis.findByLikeStudent", query = "SELECT t FROM Thesis t JOIN t.studentId s WHERE UPPER(s.fullname) LIKE UPPER(:parameter)"),
+    @NamedQuery(name = "Thesis.findByUserId", query = "SELECT t FROM Thesis t JOIN t.studentId s WHERE t.userId.userId = :userId")})
 public class Thesis implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -60,8 +63,8 @@ public class Thesis implements Serializable {
     @Column(name = "updated_at")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
-    @OneToMany(mappedBy = "tesisId")
-    private List<Borrows> borrowsList;
+    @Column(name = "banyaknya")
+    private Integer banyaknya;
     @JoinColumn(name = "student_id", referencedColumnName = "student_id")
     @ManyToOne
     private Students studentId;
@@ -132,12 +135,12 @@ public class Thesis implements Serializable {
         this.updatedAt = updatedAt;
     }
 
-    public List<Borrows> getBorrowsList() {
-        return borrowsList;
+    public Integer getBanyaknya() {
+        return banyaknya;
     }
 
-    public void setBorrowsList(List<Borrows> borrowsList) {
-        this.borrowsList = borrowsList;
+    public void setBanyaknya(Integer banyaknya) {
+        this.banyaknya = banyaknya;
     }
 
     public Students getStudentId() {
@@ -180,5 +183,5 @@ public class Thesis implements Serializable {
     public String toString() {
         return "Database.Thesis[ tesisId=" + tesisId + " ]";
     }
-    
+
 }

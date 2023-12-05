@@ -41,7 +41,8 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "Students.findByLikeNim", query = "SELECT s FROM Students s WHERE s.nim LIKE :parameter"),
     @NamedQuery(name = "Students.findByLikeFullname", query = "SELECT s FROM Students s WHERE UPPER(s.fullname) LIKE UPPER(:parameter)"),
     @NamedQuery(name = "Students.findByLikeTelepon", query = "SELECT s FROM Students s WHERE s.telepon LIKE :parameter"),
-    @NamedQuery(name = "Students.findByLikeAlamat", query = "SELECT s FROM Students s WHERE UPPER(s.alamat) LIKE UPPER(:parameter)")})
+    @NamedQuery(name = "Students.findByLikeAlamat", query = "SELECT s FROM Students s WHERE UPPER(s.alamat) LIKE UPPER(:parameter)"),
+    @NamedQuery(name = "Students.findByLikeAngkatan", query = "SELECT s FROM Students s WHERE CAST(s.angkatan AS text) LIKE :parameter")})
 public class Students implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -123,7 +123,7 @@
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/assets/img/logo-30x30.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Kategori"/>
+            <Property name="text" type="java.lang.String" value="Cari Kategori Buku"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="btnAdd">

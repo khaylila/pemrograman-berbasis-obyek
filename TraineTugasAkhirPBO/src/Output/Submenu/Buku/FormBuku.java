@@ -9,7 +9,7 @@ import Database.Categories;
 import Database.Students;
 import Database.Users;
 import Output.MainFrame;
-import Output.Submenu.Kategori;
+import Output.Submenu.CariKategori;
 import Output.Submenu.Mahasiswa.CariPenyumbangBuku;
 import View.BookNew;
 import java.awt.Image;
@@ -31,7 +31,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author milea
  */
 public class FormBuku extends MainFrame {
-
+    
     int userId;
     Students student;
     ArrayList<Categories> listSelectedCategory = new ArrayList<>();
@@ -46,13 +46,13 @@ public class FormBuku extends MainFrame {
     public FormBuku() {
         initComponents();
     }
-
+    
     public FormBuku(Object obj, int userId) {
         this.userId = userId;
         this.obj = obj;
         initComponents();
     }
-
+    
     public void setMahasiswaId(int studentId) {
         System.out.println("studentID " + studentId);
         TypedQuery<Students> getStudentById = entityManager.createNamedQuery("Students.findByStudentId", Students.class);
@@ -61,7 +61,7 @@ public class FormBuku extends MainFrame {
         this.student = student;
         inputStudentId.setText(student.getFullname());
     }
-
+    
     public void setKategoriBuku(ArrayList<Integer> listSelectedCategory) {
         this.listSelectedCategory.clear();
         int i = 1;
@@ -330,10 +330,10 @@ public class FormBuku extends MainFrame {
         FileNameExtensionFilter fnxf = new FileNameExtensionFilter("PNG, JPG AND JPEG", "png", "jpg", "jpeg");
         fileChooser.addChoosableFileFilter(fnxf);
         int load = fileChooser.showOpenDialog(null);
-
+        
         if (load == fileChooser.APPROVE_OPTION) {
             file = fileChooser.getSelectedFile();
-
+            
             path = file.getAbsolutePath();
             ImageIcon ii = new ImageIcon(path);
             Image img = ii.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
@@ -356,7 +356,7 @@ public class FormBuku extends MainFrame {
             String tahunTerbit = inputTahunTerbit.getText().trim();
             String jumlahHalaman = inputJumlahHalaman.getText().trim();
             int banyaknya = Integer.parseInt(inputBanyaknya.getText().trim());
-
+            
             if (isbn.isEmpty() || judul.isEmpty() || subJudul.isEmpty() || pengarang.isEmpty() || penerbit.isEmpty() || tahunTerbit.isEmpty() || jumlahHalaman.isEmpty() || banyaknya <= 0) {
                 this.peringatan("Data tidak boleh kosong!");
             } else {
@@ -374,7 +374,7 @@ public class FormBuku extends MainFrame {
                         InputStream is = new FileInputStream(file);
                         newBook.setFotoSampul(is.readAllBytes());
                     }
-
+                    
                     TypedQuery<Users> queryGetUsername = entityManager.createNamedQuery("Users.findByUserId", Users.class);
                     queryGetUsername.setParameter("userId", userId);
                     Users result = queryGetUsername.getSingleResult();
@@ -382,7 +382,7 @@ public class FormBuku extends MainFrame {
                     Date date = new Date();
                     newBook.setCreatedAt(date);
                     newBook.setUpdatedAt(date);
-
+                    
                     newBook.setCategoriesList(listSelectedCategory);
                     
                     newBook.setStudentId(student);
@@ -404,7 +404,7 @@ public class FormBuku extends MainFrame {
                     this.peringatan("Terjadi kesalahan!");
                     entityManager.getTransaction().rollback();
                 }
-
+                
             }
         }
     }//GEN-LAST:event_btnSaveActionPerformed
@@ -418,11 +418,11 @@ public class FormBuku extends MainFrame {
                 this.peringatan("File tidak ditemukan.");
             }
             byte[] imgData = inputStream.readAllBytes();
-
+            
             ImageIcon ii = new ImageIcon(imgData);
             Image img = ii.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
             labelPreview.setIcon(new ImageIcon(img));
-
+            
         } catch (IOException e) {
             this.peringatan("File tidak ditemukan");
         }
@@ -435,7 +435,7 @@ public class FormBuku extends MainFrame {
 
     private void inputKategoriMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_inputKategoriMouseClicked
         // TODO add your handling code here:
-        new Kategori(this, userId).setVisible(true);
+        new CariKategori(this, userId).setVisible(true);
     }//GEN-LAST:event_inputKategoriMouseClicked
 
     /**
